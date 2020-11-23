@@ -37,6 +37,7 @@ client.on("message", async (message) => {
 		case "hello": message.reply(`Wtf do you want? Oh- I mean- Greetings, son.`); break;
 		case "remember": remember(message, args); break;
 		case "recall": recall(message, args); break;
+		case "forget": forget(message, args); break;
 	}
 });
 
@@ -121,5 +122,17 @@ const recall = (message, args) => {
 	});
 
 }
+
+const forget = (message, args) => {
+	key = "";
+	for(i of args) {
+		key += i.toString() + " "
+	}
+	ref.child(key).remove(() => {
+		channel.send(`${key}? What's that?`);
+	});
+	
+}
+
 const token = (process.env.BOT_TOKEN || require('.env').BOT_TOKEN)
 client.login(token);
