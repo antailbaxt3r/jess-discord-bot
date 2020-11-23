@@ -115,6 +115,8 @@ const recall = (message, args) => {
 		console.log(snap.val());
 		if(snap && snap.val() !== null && snap.val() !== undefined && snap.val() !== ""){
 			channel.send(`From what I remember, ${key} is : \n\n${snap.val()}`);
+		}else{
+			message.reply("I don't remember anything like that");
 		}
 	});
 
