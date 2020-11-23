@@ -31,12 +31,12 @@ client.on("message", async (message) => {
 	const command = args.shift().toLowerCase();
 	console.log(args)
 	switch (command) {
-		case "quote": quote();
-		case "help": help();
-		case "hi": message.reply(`Good day, ${message.author}! The lord greets you!`);
-		case "hello": message.reply(`Wtf do you want? Oh- I mean- Greetings, son.`);
-		case "remember": remember(message, args);
-		case "recall": recall(message, args);
+		case "quote": quote(); break;
+		case "help": help(); break;
+		case "hi": message.reply(`Good day, ${message.author}! The lord greets you!`); break;
+		case "hello": message.reply(`Wtf do you want? Oh- I mean- Greetings, son.`); break;
+		case "remember": remember(message, args); break;
+		case "recall": recall(message, args); break;
 	}
 });
 
