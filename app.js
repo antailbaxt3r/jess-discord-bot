@@ -19,7 +19,6 @@ const prefix = "jess ";
 
 client.on("ready", async () => {
 	console.log("I am ready!");
-	channel = await client.channels.fetch("714077749249179671");
 });
 
 client.on("message", async (message) => {
@@ -38,8 +37,16 @@ client.on("message", async (message) => {
 		case "remember": remember(message, args); break;
 		case "recall": recall(message, args); break;
 		case "forget": forget(message, args); break;
+		case "insult": insult(message, args); break;
+		case "arise": arise(message); break;
 	}
 });
+
+const arise = async (message) => {
+	channel = await client.channels.fetch(message.channel.id);
+	console.log("channel", channel)
+	channel.send(`3 days after my death already? Oh well, I'll wake up now`);
+}
 
 const daemonMessages = (message) => {
 	msg = message.content.toLowerCase();
@@ -68,7 +75,7 @@ const quote = () => {
 
 const help = () => {
 	channel.send(
-		"Don't worry my son, I'm here for you\n\n```Commands:\n\nhelp : Print this message\nquote : Say a random quote from the Bible\nhi : Greet the user\n\n\nCall on me whenever, child.```"
+		"Don't worry my son, I'm here for you\n\n```Commands:\n\narise : initialize jess\nhelp : Print this message\nquote : Say a random quote from the Bible\nhi : Greet the user\n\n\nCall on me whenever, child.\nremember : save a value or a string as a key value pair\nrecall : fetch stored value\nforget : delete stored value\ninsult : roast someone```"
 	);
 };
 
@@ -131,6 +138,22 @@ const forget = (message, args) => {
 	ref.child(key).remove(() => {
 		channel.send(`${key}? What's that?`);
 	});
+	
+}
+
+const insult = (message, args) => {
+	console.log(args[0].slice(3,-1))
+	target = args[0].slice(3,-1);
+	axios
+		.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
+		.then((res) => {
+			response = res.data;
+
+			console.log(response);
+			if(target)
+				channel.send(`Well, what can I say <@${target}>\n${response.insult}`);
+			else message.reply(`Insult who? You're the idiot here :rolling_eyes:`)
+		});
 	
 }
 
