@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
 const config = require("./config.json");
 const axios = require("axios");
-const admin = require('firebase-admin');
 const firebase = require('firebase')
-var serviceAccount = config.firebaseServiceAccount
+const dotenv = require('dotenv');
+dotenv.config();
 
 firebase.initializeApp({
 	"serviceAccount": config.firebaseServiceAccount.toString(),
@@ -13,8 +13,6 @@ firebase.initializeApp({
 var db = firebase.database();
 var ref = db.ref("/memory");
 const client = new Discord.Client();
-
-
 
 
 const prefix = "jess ";
@@ -121,5 +119,5 @@ const recall = (message, args) => {
 	});
 
 }
-
-client.login(config.BOT_TOKEN);
+const token = (process.env.BOT_TOKEN || require('.env').BOT_TOKEN)
+client.login(token);
